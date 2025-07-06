@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="background-video-container"></div>
+
+  <div class="weather-app">
+    <div class="weather-app-left">
+      <div class="search-box">
+        <img src="assets/LocationIcon.png" alt="Location Icon" id="location-icon">
+        <input type="text" placeholder="Search for a city..." id="location-input" autocomplete="off">
+        <button><img src="assets/CurrentLocationIcon.png" alt="Current Location Icon" id="current-location-icon"></button>
+
+        <ul id="suggestions"></ul>
+      </div>
+  
+      <div class="weather-info">
+        <div class="temperature-wrapper">
+          <h1 id="temperature">--</h1><span class="temp-unit">°C</span>
+        </div>
+        <p id="description">--</p>
+      </div>
+      
+      <div class="flip-clock-container">
+        <div class="flip-labels">
+          <span>Hrs</span>
+          <span>Min</span>
+          <span>Sec</span>
+        </div>
+        <div class="flip-clock">
+          <div class="flip-unit" id="flip-hour">00</div>
+          <div class="flip-unit" id="flip-minute">00</div>
+          <div class="flip-unit" id="flip-second">00</div>
+        </div>
+      </div>
+
+      <div class="weather-details">
+        <div class="date-info">
+          <p id="day">--</p>
+          <p id="date">--</p>
+        </div>
+        <div class="location-info">
+          <img src="assets/LocationIcon.png" alt="Location Icon">
+          <p id="location">Location</p>
+        </div>
+      </div>
+    </div>
+    <div class="weather-app-right">
+      <div class="weather-forecast">
+        <div>
+          <img src="assets/CalenderIcon.gif" alt="Calender Icon">
+          <p>Weekly Forecast</p>
+        </div>
+        <div class="weather-forecast-items">
+          <div class="weather-forecast-item">
+            <p class="day">Today</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/sun.png" alt="Sun" id="weather-icon">
+          </div>
+          <div class="weather-forecast-item">
+            <p class="day">Tue</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/heavy-rain.png" alt="Heavy Rain" id="weather-icon">
+          </div>
+          <div class="weather-forecast-item">
+            <p class="day">Wed</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/storm.png" alt="Storm" id="weather-icon">
+          </div>
+          <div class="weather-forecast-item">
+            <p class="day">Thu</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/storm.png" alt="Storm" id="weather-icon">
+          </div>
+          <div class="weather-forecast-item">
+            <p class="day">Fri</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/sun.png" alt="Sun" id="weather-icon">
+          </div>
+          <div class="weather-forecast-item">
+            <p class="day">Sat</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/weather.png" alt="Weather Icon" id="weather-icon">
+          </div>
+          <div class="weather-forecast-item">
+            <p class="day">Sun</p>
+            <p class="date">--</p>
+            <p class="temperature">--°C</p>
+            <img src="assets/heavy-rain.png" alt="Heavy Rain" id="weather-icon">
+          </div>
+        </div>
+      </div>
+
+      <div class="weather-highlights">
+        <h2 class="highlight-title">Today’s Highlights</h2>
+      
+        <div class="weather-highlights-items">
+          <div class="weather-highlights-item">
+            <p>Wind Status</p>
+            <h1 id="wind-status">--</h1><span> mph</span>
+          </div>
+      
+          <div class="weather-highlights-item">
+            <p>Humidity</p>
+            <h1 id="humidity">--</h1><span>%</span>
+          </div>
+      
+          <div class="weather-highlights-item">
+            <p>Visibility</p>
+            <h1 id="visibility">--</h1><span> miles</span>
+          </div>
+      
+          <div class="weather-highlights-item">
+            <p>Air Pressure</p>
+            <h1 id="air-pressure">--</h1><span> mb</span>
+          </div>
+        </div>
+      </div>       
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
