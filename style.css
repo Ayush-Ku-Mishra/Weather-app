@@ -5,7 +5,7 @@
 }
 
 body {
-    background: url('assets/BckgroundImage.jpg') no-repeat center center fixed;
+    background: url('assets/BckgroundImage.jpg') no-repeat center center fixed; 
     background-size: cover;
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;
