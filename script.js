@@ -19,32 +19,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 'X-RapidAPI-Host': GEO_API_HOST
             }
         })
-            .then(res => res.json())
-            .then(data => {
-                suggestionsList.innerHTML = '';
-                (data.data || []).forEach(city => {
-                    const li = document.createElement('li');
-                    li.textContent = `${city.name}, ${city.countryCode}`;
-                    li.classList.add('suggestion-item');
-                    li.addEventListener('click', () => {
-                        locationInput.value = city.name;
-                        suggestionsList.innerHTML = '';
-                        fetchWeatherMeteo(city.latitude, city.longitude, city.name);
-                    });
-                    suggestionsList.appendChild(li);
+        .then(res => res.json())
+        .then(data => {
+            suggestionsList.innerHTML = '';
+            (data.data || []).forEach(city => {
+                const li = document.createElement('li');
+                li.textContent = `${city.name}, ${city.countryCode}`;
+                li.classList.add('suggestion-item');
+                li.addEventListener('click', () => {
+                    locationInput.value = city.name;
+                    suggestionsList.innerHTML = '';
+                    fetchWeatherMeteo(city.latitude, city.longitude, city.name);
                 });
-
-                if (data.data.length === 0) {
-                    suggestionsList.innerHTML = '<li>No city found</li>';
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                suggestionsList.innerHTML = '<li>Error fetching suggestions</li>';
+                suggestionsList.appendChild(li);
             });
+
+            if (data.data.length === 0) {
+                suggestionsList.innerHTML = '<li>No city found</li>';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            suggestionsList.innerHTML = '<li>Error fetching suggestions</li>';
+        });
     });
 
-    // Detect current location on icon click
     document.getElementById('current-location-icon').addEventListener('click', () => {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition(
@@ -52,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const lat = position.coords.latitude;
                     const lon = position.coords.longitude;
 
-                    // Reverse geocode to get city name
                     fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
                         .then(res => res.json())
                         .then(data => {
@@ -93,26 +91,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.weather-info h1').textContent = temp;
                 document.querySelector('.weather-info span').textContent = '°C';
 
-                // Get condition description with emoji
                 const wind = cw.windspeed;
                 const desc = getWeatherDescription(temp, wind);
                 document.getElementById('description').textContent = desc;
 
                 document.getElementById('location').textContent = cityName;
 
-                // Dynamic background based on condition
                 updateBackground(desc);
 
-                // Speak out
                 speakWeather(cityName, temp, desc);
 
-                // Highlights
                 document.getElementById('wind-status').textContent = wind;
                 document.getElementById('humidity').textContent = hourly.relative_humidity_2m[0];
                 document.getElementById('visibility').textContent = (hourly.visibility[0] / 1000).toFixed(1);
                 document.getElementById('air-pressure').textContent = hourly.pressure_msl[0];
 
-                // Forecast update
                 const forecastItems = document.querySelectorAll('.weather-forecast-item');
                 const today = new Date();
 
@@ -128,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     forecastItems[i].querySelector('.temperature').textContent = `${Math.round(hourly.temperature_2m[i])}°C`;
                 }
 
-
                 const now = new Date();
                 document.getElementById('day').textContent = now.toLocaleDateString('en-US', { weekday: 'long' });
                 document.getElementById('date').textContent = now.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
@@ -136,26 +128,22 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error('Open-Meteo error:', err));
     }
 
-    // Dynamic background based on description
     function updateBackground(description) {
         const body = document.body;
 
-        // Reset background
         body.style.background = 'none';
         body.style.backgroundSize = 'cover';
 
-        // Fade-in animation
-        body.classList.remove('fading-bg'); // Remove previous class
-        void body.offsetWidth; // Force reflow (important!)
+        body.classList.remove('fading-bg');
+        void body.offsetWidth;
         body.classList.add('fading-bg');
 
-        // Remove any existing background video
         const oldVideo = document.getElementById('bg-video');
         if (oldVideo) oldVideo.remove();
 
         function setVideo(fileName) {
             const video = document.createElement('video');
-            video.src = `assets/${fileName}`;
+            video.src = `./assets/${fileName}`; // ✅ Fixed path
             video.id = 'bg-video';
             video.autoplay = true;
             video.loop = true;
@@ -171,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
             video.style.opacity = '0';
             video.style.transition = 'opacity 1s ease-in-out';
 
-            // Wait until video is ready before fading in
             video.addEventListener('canplay', () => {
                 video.style.opacity = '1';
             });
@@ -196,21 +183,19 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (desc.includes("wind") || desc.includes("🌪️")) {
             setVideo("WindyVideo.mp4");
         } else if (desc.includes("sun") || desc.includes("clear") || desc.includes("☀️")) {
-            body.style.background = "url('assets/SunnyImage.jpg') no-repeat center center fixed";
+            body.style.background = "url('./assets/SunnyImage.jpg') no-repeat center center fixed"; // ✅ Fixed path
         } else {
-            body.style.background = "url('assets/DefaultWeather.jpg') no-repeat center center fixed";
+            body.style.background = "url('./assets/DefaultWeather.jpg') no-repeat center center fixed"; // ✅ Fixed path
         }
 
         body.style.backgroundSize = "cover";
     }
 
-    // Speak weather aloud
     function speakWeather(city, temp, desc) {
         const msg = new SpeechSynthesisUtterance(`The current weather in ${city} is ${temp} degrees Celsius. ${desc}`);
         window.speechSynthesis.speak(msg);
     }
 
-    // Weather description logic
     function getWeatherDescription(temp, wind) {
         if (wind > 50) return "🌩️ Heavy Stormy Day";
         if (wind > 30) return "💨 Windy Day";
@@ -232,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const seconds = now.getSeconds();
 
         hours = hours % 12;
-        hours = hours ? hours : 12; // convert 0 to 12
+        hours = hours ? hours : 12;
 
         document.getElementById('flip-hour').textContent = padZero(hours);
         document.getElementById('flip-minute').textContent = padZero(minutes);
