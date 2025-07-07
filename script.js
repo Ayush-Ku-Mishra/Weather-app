@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setVideo(fileName) {
       const video = document.createElement('video');
-      video.src = `assets/${fileName}`;
+      video.src = `/assets/${fileName}`;
       video.id = 'bg-video';
       video.autoplay = true;
       video.loop = true;
@@ -193,9 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (desc.includes("wind") || desc.includes("🌪️")) {
       setVideo("WindyVideo.mp4");
     } else if (desc.includes("sun") || desc.includes("clear") || desc.includes("☀️")) {
-      body.style.background = "url('assets/SunnyImage.jpg') no-repeat center center fixed";
+      body.style.background = "url('/assets/SunnyImage.jpg') no-repeat center center fixed";
     } else {
-      body.style.background = "url('assets/DefaultWeather.jpg') no-repeat center center fixed";
+      body.style.background = "url('/assets/DefaultWeather.jpg') no-repeat center center fixed";
     }
 
     body.style.backgroundSize = "cover";
